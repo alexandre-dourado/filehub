@@ -1,0 +1,112 @@
+{
+  "generated": "2026-03-21T23:58:28.076Z",
+  "total": 6,
+  "byType": {
+    "md": 4,
+    "html": 1,
+    "txt": 1
+  },
+  "byCategory": {
+    "tutoriais": 2,
+    "referencias": 2,
+    "exemplos": 2
+  },
+  "files": [
+    {
+      "id": "Y29udGVudC90dXRvcmlhaXMvbWFya2Rvd24tZ3VpYS5tZA",
+      "name": "markdown-guia",
+      "filename": "markdown-guia.md",
+      "path": "content/tutoriais/markdown-guia.md",
+      "type": "md",
+      "size": "653 B",
+      "sizeRaw": 653,
+      "date": "2026-03-21T23:58:20.671Z",
+      "category": "tutoriais",
+      "excerpt": "Guia Rápido de Markdown Texto negrito com texto itálico com texto tachado com texto código inline com backticks Títulos H1 — título principal H2 — subtítulo H3 …",
+      "tags": [
+        "tutoriais",
+        "md"
+      ]
+    },
+    {
+      "id": "Y29udGVudC9yZWZlcmVuY2lhcy9hdGFsaG9zLXZzY29kZS5tZA",
+      "name": "atalhos-vscode",
+      "filename": "atalhos-vscode.md",
+      "path": "content/referencias/atalhos-vscode.md",
+      "type": "md",
+      "size": "573 B",
+      "sizeRaw": 573,
+      "date": "2026-03-21T23:58:20.667Z",
+      "category": "referencias",
+      "excerpt": "Atalhos Essenciais — VS Code Edição | Atalho | Ação | |--------|------| | Ctrl+D | Selecionar próxima ocorrência | | Ctrl+Shift+L | Selecionar todas as ocorrênc…",
+      "tags": [
+        "referencias",
+        "md"
+      ]
+    },
+    {
+      "id": "Y29udGVudC90dXRvcmlhaXMvZ2l0LWVzc2VuY2lhbC5tZA",
+      "name": "git-essencial",
+      "filename": "git-essencial.md",
+      "path": "content/tutoriais/git-essencial.md",
+      "type": "md",
+      "size": "577 B",
+      "sizeRaw": 577,
+      "date": "2026-03-21T21:52:15.000Z",
+      "category": "tutoriais",
+      "excerpt": "Tutorial: Git Essencial Configuração inicial bash git config --global user.name \"Seu Nome\" git config --global user.email \"email@exemplo.com\" Fluxo básico bash …",
+      "tags": [
+        "tutoriais",
+        "md"
+      ]
+    },
+    {
+      "id": "Y29udGVudC9yZWZlcmVuY2lhcy9jaGVhdHNoZWV0Lmh0bWw",
+      "name": "cheatsheet",
+      "filename": "cheatsheet.html",
+      "path": "content/referencias/cheatsheet.html",
+      "type": "html",
+      "size": "654 B",
+      "sizeRaw": 654,
+      "date": "2026-03-21T21:52:03.000Z",
+      "category": "referencias",
+      "excerpt": "Referência HTML body { font-family: monospace; background: 1a1a2e; color: eee; padding: 2rem; } h1 { color: 7c3aed; } code { background: 2d2d4e; padding: 2px 6p…",
+      "tags": [
+        "referencias",
+        "html"
+      ]
+    },
+    {
+      "id": "Y29udGVudC9leGVtcGxvcy9ub3Rhcy50eHQ",
+      "name": "notas",
+      "filename": "notas.txt",
+      "path": "content/exemplos/notas.txt",
+      "type": "txt",
+      "size": "266 B",
+      "sizeRaw": 266,
+      "date": "2026-03-21T21:51:53.000Z",
+      "category": "exemplos",
+      "excerpt": "NOTAS RÁPIDAS ============= Este é um arquivo de texto simples. Você pode copiar o conteúdo com o botão \"Copiar\". Dicas: - Use subpastas para organizar por cate…",
+      "tags": [
+        "exemplos",
+        "txt"
+      ]
+    },
+    {
+      "id": "Y29udGVudC9leGVtcGxvcy9pbnRyb2R1Y2FvLm1k",
+      "name": "introducao",
+      "filename": "introducao.md",
+      "path": "content/exemplos/introducao.md",
+      "type": "md",
+      "size": "413 B",
+      "sizeRaw": 413,
+      "date": "2026-03-21T21:51:44.000Z",
+      "category": "exemplos",
+      "excerpt": "Introdução ao Hub de Arquivos Este é um arquivo de exemplo para demonstrar o viewer de Markdown. Funcionalidades - Busca em tempo real - Filtros por categoria -…",
+      "tags": [
+        "exemplos",
+        "md"
+      ]
+    }
+  ]
+}

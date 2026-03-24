@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0d14" />
+  <meta name="description" content="FileHub — sua central de conhecimento pessoal." />
+  <title>FileHub</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Marked.js — renderizar Markdown -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js" defer></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ░░ SIDEBAR ░░ -->
+  <aside id="sidebar" aria-label="Navegação">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M3 7c0-1.1.9-2 2-2h5l2 2h7a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>
+      </svg>
+      <span>FileHub</span>
+      <span id="version-badge">v2</span>
+    </div>
+
+    <!-- Navegação de categorias -->
+    <nav id="category-nav" aria-label="Categorias">
+      <p class="nav-label">Categorias</p>
+    </nav>
+
+    <!-- Favoritos -->
+    <div class="sidebar-section">
+      <p class="nav-label">
+        Favoritos
+        <span id="fav-count-badge"></span>
+      </p>
+      <ul id="favorites-list" aria-label="Arquivos favoritos"></ul>
+    </div>
+
+    <!-- Stats rápido -->
+    <div class="sidebar-section sidebar-stats">
+      <p class="nav-label">Tipos</p>
+      <div id="type-stats"></div>
+    </div>
+
+    <footer class="sidebar-footer">
+      <span id="total-count">— arquivos</span>
+      <span id="index-date"></span>
+    </footer>
+  </aside>
+
+  <!-- ░░ MAIN ░░ -->
+  <main id="main">
+
+    <!-- Topbar -->
+    <header id="topbar">
+      <button id="btn-menu" aria-label="Abrir menu" title="Menu (M)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <div id="search-wrap" role="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Buscar arquivos… (/ para focar)"
+          autocomplete="off"
+          aria-label="Buscar arquivos"
+        />
+        <button id="btn-clear-search" aria-label="Limpar busca" hidden>✕</button>
+      </div>
+
+      <div id="topbar-actions">
+        <select id="sort-select" title="Ordenar por" aria-label="Ordenar por">
+          <option value="date-desc">Mais recente</option>
+          <option value="date-asc">Mais antigo</option>
+          <option value="name-asc">Nome A→Z</option>
+          <option value="name-desc">Nome Z→A</option>
+          <option value="size-desc">Maior tamanho</option>
+        </select>
+
+        <div class="view-toggle" role="group" aria-label="Modo de visualização">
+          <button id="btn-grid" class="view-btn active" aria-label="Modo grade" title="Grade (G)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3"  y="3"  width="7" height="7" rx="1"/>
+              <rect x="14" y="3"  width="7" height="7" rx="1"/>
+              <rect x="3"  y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+          </button>
+          <button id="btn-list" class="view-btn" aria-label="Modo lista" title="Lista (L)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="8"  y1="6"  x2="21" y2="6"/>
+              <line x1="8"  y1="12" x2="21" y2="12"/>
+              <line x1="8"  y1="18" x2="21" y2="18"/>
+              <line x1="3"  y1="6"  x2="3.01" y2="6"/>
+              <line x1="3"  y1="12" x2="3.01" y2="12"/>
+              <line x1="3"  y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Painel de atalhos (?) -->
+        <button id="btn-shortcuts" class="view-btn" aria-label="Atalhos de teclado" title="Atalhos (?)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Filtros por tipo ativos (chips) -->
+    <div id="filter-chips-wrap">
+      <div id="filter-chips"></div>
+    </div>
+
+    <!-- Título da view ativa -->
+    <div id="page-title">
+      <h1 id="active-label">Todos os arquivos</h1>
+      <span id="result-count"></span>
+    </div>
+
+    <!-- Grid / Lista -->
+    <div id="files-container" class="grid-view" role="list" aria-label="Arquivos"></div>
+
+    <!-- Estado vazio -->
+    <div id="empty-state" hidden role="status">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <p id="empty-msg">Nenhum arquivo encontrado.</p>
+      <button id="btn-reset-filters" class="btn-pill">Limpar filtros</button>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading-state">
+      <div class="spinner"></div>
+      <p>Carregando índice…</p>
+    </div>
+
+  </main>
+
+  <!-- ░░ VIEWER OVERLAY ░░ -->
+  <div id="viewer-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="viewer-title">
+    <div id="viewer-panel">
+
+      <div id="viewer-header">
+        <div id="viewer-meta">
+          <span id="viewer-badge" class="badge"></span>
+          <h2 id="viewer-title"></h2>
+          <span id="viewer-info"></span>
+        </div>
+        <div id="viewer-controls">
+          <button id="btn-fav-viewer" title="Favoritar (F)">☆</button>
+          <button id="btn-copy-viewer" title="Copiar conteúdo (C)" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copiar
+          </button>
+          <button id="btn-open-tab" title="Abrir em nova aba (O)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </button>
+          <button id="btn-close-viewer" title="Fechar (Esc)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Breadcrumb do viewer -->
+      <div id="viewer-breadcrumb"></div>
+
+      <div id="viewer-body"></div>
+
+    </div>
+  </div>
+
+  <!-- ░░ PAINEL DE ATALHOS ░░ -->
+  <div id="shortcuts-panel" hidden role="dialog" aria-modal="true" aria-label="Atalhos de teclado">
+    <div id="shortcuts-box">
+      <div class="shortcuts-header">
+        <h3>Atalhos de Teclado</h3>
+        <button id="btn-close-shortcuts">✕</button>
+      </div>
+      <div class="shortcuts-grid">
+        <kbd>/</kbd><span>Focar na busca</span>
+        <kbd>G</kbd><span>Modo grade</span>
+        <kbd>L</kbd><span>Modo lista</span>
+        <kbd>M</kbd><span>Abrir/fechar menu</span>
+        <kbd>?</kbd><span>Este painel</span>
+        <kbd>Esc</kbd><span>Fechar viewer / painel</span>
+        <kbd>F</kbd><span>Favoritar arquivo aberto</span>
+        <kbd>O</kbd><span>Abrir em nova aba</span>
+        <kbd>C</kbd><span>Copiar conteúdo</span>
+        <kbd>←  →</kbd><span>Arquivo anterior / próximo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ TOAST ░░ -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

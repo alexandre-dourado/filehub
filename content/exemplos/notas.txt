@@ -1,0 +1,10 @@
+NOTAS RÁPIDAS
+=============
+
+Este é um arquivo de texto simples.
+Você pode copiar o conteúdo com o botão "Copiar".
+
+Dicas:
+- Use subpastas para organizar por categoria
+- O indexador detecta automaticamente o tipo do arquivo
+- Favoritos são salvos no navegador
